@@ -1,32 +1,32 @@
 import './App.css';
 import data from './data.js';
 
-function App() {
+const App = () => {
   let lowScoringData = data.filter(question => question['percent_correct'] < 0.5)
   // let highScoringData = data.filter(question => question['percent_correct'] > 0.5)
 
-function countRepeatedWords(sentence) {
-  let words = sentence.split(" ");
-  let wordMap = {};
-
-  for (let i = 0; i < words.length; i++) {
-    let currentWordCount = wordMap[words[i]];
-    let count = currentWordCount ? currentWordCount : 0;
-    wordMap[words[i]] = count + 1;
-  }
-  return wordMap;
-}
+const countWords = (sentence) => sentence.split(" ");
 let wordCountedArray = lowScoringData.map(question => (
-  question['text'] = countRepeatedWords(question['text'])
+  question['text'] = countWords(question['text'])
 ));
 
-let newCountedArray = wordCountedArray.map((words => (words.flat()
-)))
-console.log(newCountedArray);
+var mergedWordList = [].concat.apply([], wordCountedArray);
+
+const wordCounts = [];
+mergedWordList.forEach((x) => {
+  wordCounts[x] = (wordCounts[x] || 0) + 1;
+});
+
+
+
+// wordCounts.filter(word => word > 1)
+
+console.log(wordCounts);
+
   return (
     <div className="App">
       <header className="App-header">
-        Hello World
+        Low 
       </header>
     </div>
   );
